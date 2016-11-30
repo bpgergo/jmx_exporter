@@ -1,6 +1,9 @@
 .DS_Store
 # editor files
 *.swp
+.idea
+*.iml
+
 
 # compilation objects
 target/

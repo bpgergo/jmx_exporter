@@ -15,13 +15,12 @@
   <url>http://github.com/prometheus/jmx_exporter</url>
 
   <dependencies>
-    <!-- protobuff compiled classes
+    <!-- protobuff compiled classes -->
     <dependency>
       <groupId>io.prometheus.client</groupId>
       <artifactId>model</artifactId>
       <version>0.0.3-SNAPSHOT</version>
     </dependency>
-    -->
 
     <dependency>
       <groupId>com.google.protobuf</groupId>

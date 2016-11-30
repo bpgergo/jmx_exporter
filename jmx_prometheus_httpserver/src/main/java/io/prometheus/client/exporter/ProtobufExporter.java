@@ -21,7 +21,6 @@ public class ProtobufExporter {
      * Write out the protobuf version the given MetricFamilySamples.
      */
     public static void write(OutputStream out, Enumeration<Collector.MetricFamilySamples> mfs) throws IOException {
-        Metrics.MetricFamilies.Builder list = Metrics.MetricFamilies.newBuilder();
 
         for (Collector.MetricFamilySamples metricFamilySamples: Collections.list(mfs)) {
             Metrics.MetricFamily.Builder metrics = Metrics.MetricFamily.newBuilder();
@@ -47,10 +46,9 @@ public class ProtobufExporter {
                 }
                 metrics.addMetric(metric.build());
             }
-            list.addMetricFamily(metrics.build());
+            metrics.build().writeDelimitedTo(out);
         }
 
-        list.build().writeDelimitedTo(out);
     }
 
 
