@@ -1,0 +1,17 @@
+stanley git:(master) curl -o result.txt -v -s -i -H "Accept: application/vnd.google.protobuf; proto=io.prometheus.client.MetricFamily; encoding=delimited" http://172.18.129.11:9100/metrics --compress
+*   Trying 172.18.129.11...
+* Connected to 172.18.129.11 (172.18.129.11) port 9100 (#0)
+> GET /metrics HTTP/1.1
+> Host: 172.18.129.11:9100
+> User-Agent: curl/7.43.0
+> Accept-Encoding: deflate, gzip
+> Accept: application/vnd.google.protobuf; proto=io.prometheus.client.MetricFamily; encoding=delimited
+>
+< HTTP/1.1 200 OK
+< Content-Encoding: gzip
+< Content-Length: 15142
+< Content-Type: application/vnd.google.protobuf; proto=io.prometheus.client.MetricFamily; encoding=delimited
+< Date: Tue, 29 Nov 2016 15:13:22 GMT
+<
+{ [9349 bytes data]
+* Connection #0 to host 172.18.129.11 left intact
