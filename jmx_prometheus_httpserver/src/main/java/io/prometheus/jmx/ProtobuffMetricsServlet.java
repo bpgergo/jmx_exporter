@@ -35,7 +35,11 @@ public class ProtobuffMetricsServlet extends HttpServlet {
         if (header.equals(ProtobufExporter.CONTENT_TYPE_PROTOOBUF)) {
             resp.setContentType(ProtobufExporter.CONTENT_TYPE_PROTOOBUF);
             OutputStream out = resp.getOutputStream();
-            ProtobufExporter.write(out, this.registry.metricFamilySamples());
+            Integer length = ProtobufExporter.write(out, this.registry.metricFamilySamples());
+            if (length != null && length > 0){
+                resp.setContentLength(length);
+                LOGGER.severe("content lenght:" + length);
+            }
             out.flush();
             out.close();
         } else {

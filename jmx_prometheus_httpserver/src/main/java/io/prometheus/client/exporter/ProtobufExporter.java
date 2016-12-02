@@ -1,5 +1,6 @@
 package io.prometheus.client.exporter;
 
+import com.google.protobuf.CodedOutputStream;
 import io.prometheus.client.Collector;
 import io.prometheus.client.Metrics;
 
@@ -20,8 +21,8 @@ public class ProtobufExporter {
     /**
      * Write out the protobuf version the given MetricFamilySamples.
      */
-    public static void write(OutputStream out, Enumeration<Collector.MetricFamilySamples> mfs) throws IOException {
-
+    public static Integer write(OutputStream out, Enumeration<Collector.MetricFamilySamples> mfs) throws IOException {
+        Integer contentLength = 0;
         for (Collector.MetricFamilySamples metricFamilySamples: Collections.list(mfs)) {
             Metrics.MetricFamily.Builder metrics = Metrics.MetricFamily.newBuilder();
             metrics.setHelp(metricFamilySamples.help);
@@ -46,9 +47,14 @@ public class ProtobufExporter {
                 }
                 metrics.addMetric(metric.build());
             }
-            metrics.build().writeDelimitedTo(out);
+            //see https://github.com/prometheus/prometheus/blob/master/vendor/github.com/matttproud/golang_protobuf_extensions/pbutil/encode.go
+            //or see implementation of the writeDelimitedTo method
+            Metrics.MetricFamily messageFragment = metrics.build();
+            int serialized = messageFragment.getSerializedSize();
+            contentLength += CodedOutputStream.computeRawVarint32Size(serialized) + serialized;
+            messageFragment.writeDelimitedTo(out);
         }
-
+        return contentLength;
     }
 
 
