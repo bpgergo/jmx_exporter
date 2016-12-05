@@ -49,8 +49,7 @@ public class ProtobuffMetricsServlet extends HttpServlet {
             writer.flush();
             writer.close();
         }
-        resp.setStatus(200);
-
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
